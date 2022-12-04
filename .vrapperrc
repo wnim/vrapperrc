@@ -1,0 +1,43 @@
+
+"vim settings
+
+set scrolloff=4
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+
+"vrapper settings
+
+"enables <C-n> and <C-p> navigation in content assist.
+"Not really worth it because it only works for one menu.
+set contentassistmode
+
+"Eclipse actions commands
+"toggle wrap
+eclipseaction wrap org.eclipse.ui.edit.text.toggleWordWrap
+
+"DVT actions commands
+
+"apply content filters
+eclipseaction acf ro.amiq.dvt.actions.uvm.GUIFilters
+"format code
+eclipseaction format ro.amiq.vlogdt.ui.editor.FormatSource
+"goto systemverilog declaration
+eclipseaction dvt_sv_goto_declaration ro.amiq.vlogdt.ui.editor.OpenDeclaration
+nmap gd :dvt_sv_goto_declaration<enter>
+"comment
+eclipseaction dvt_sv_comment ro.amiq.vlogdt.ui.editor.ToggleComment
+nmap gcc :dvt_sv_comment<enter>
+"refactor
+eclipseaction dvt_refactor_rename ro.amiq.vlogdt.ui.editor.actions.RefactorRename
+nmap gR :dvt_refactor_rename<enter>
+
+
+"I really want ccase plugin like in vim
+"just :ctco :ctci :ctunco
+
+"plugin settings
+
+"enable sub-word plugin which is kinda like CamelCase.vim
+subwordmappings

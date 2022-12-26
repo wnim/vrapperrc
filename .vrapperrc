@@ -34,8 +34,15 @@ eclipseaction dvt_refactor_rename ro.amiq.vlogdt.ui.editor.actions.RefactorRenam
 nmap gR :dvt_refactor_rename<enter>
 
 
-"I really want ccase plugin like in vim
-"just :ctco :ctci :ctunco
+
+":ctco :ctci :ctunco
+
+eclipseaction ctco dynamic.action.05_co
+eclipseaction ctci dynamic.action.06_ci
+eclipseaction ctunco dynamic.action.06_unco
+
+
+
 
 "plugin settings
 

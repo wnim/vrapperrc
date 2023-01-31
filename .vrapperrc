@@ -6,6 +6,8 @@ set incsearch
 set ignorecase
 set smartcase
 set hlsearch
+set clipboard=unnamedplus
+"let mapleader=" "
 
 "vrapper settings
 
@@ -14,18 +16,28 @@ set hlsearch
 set contentassistmode
 
 "Eclipse actions commands
-"toggle wrap
-eclipseaction wrap org.eclipse.ui.edit.text.toggleWordWrap
-
 "DVT actions commands
 
+"-------\/ Emulating vim as IDE \/-------
+"Using neovim LSP keybinds
 "apply content filters
 eclipseaction acf ro.amiq.dvt.actions.uvm.GUIFilters
 "format code
 eclipseaction format ro.amiq.vlogdt.ui.editor.FormatSource
-"goto systemverilog declaration
+"goto systemverilog declaration "This actually goes to implementation instead of declaration
+"It's a problem because gi should go to implementation
 eclipseaction dvt_sv_goto_declaration ro.amiq.vlogdt.ui.editor.OpenDeclaration
 nmap gd :dvt_sv_goto_declaration<enter>
+
+"I don't see an action that actually takes me to declaration and not implementation
+nmap gi :dvt_sv_goto_declaration<enter>
+
+"show references
+eclipseaction showUsages ro.amiq.vlogdt.ui.editor.actions.ReferencesInWorkspace
+nmap gr :showUsages<enter>:tablast<enter>
+"I don't remember why Zeljko showed me this.
+":tablast<enter>
+
 "comment
 eclipseaction dvt_sv_comment ro.amiq.vlogdt.ui.editor.ToggleComment
 nmap gcc :dvt_sv_comment<enter>
@@ -33,14 +45,72 @@ nmap gcc :dvt_sv_comment<enter>
 eclipseaction dvt_refactor_rename ro.amiq.vlogdt.ui.editor.actions.RefactorRename
 nmap gR :dvt_refactor_rename<enter>
 
+"Hopefully this is better than vrapper's implementation of %
+"It's not, because it exists visual mode :(
+"eclipseaction match_pair ro.amiq.vlogdt.ui.editor.GoToPairBracket
+"nmap % :match_pair<enter>
+"vmap % :match_pair<enter>
 
+"eclipseaction SelectEnclosingElementz ro.amiq.vlogdt.ui.editor.SelectEnclosingElement 
+
+"-------/\ Emulating vim as IDE /\-------
+
+"------------\/ quick views \/------------
+eclipseaction dvt_quick_compile_order ro.amiq.dvt.ui.action.QuickCompileOrder
+nmap <Space>i :dvt_quick_compile_order<enter>
+vmap <Space>i :dvt_quick_compile_order<enter>
+
+eclipseaction dvt_quick_outline ro.amiq.dvt.ui.action.QuickOutline
+nmap <Space>o :dvt_quick_outline<enter>
+vmap <Space>o :dvt_quick_outline<enter>
+
+eclipseaction quickHier ro.amiq.dvt.ui.action.QuickTypeHierarchy
+noremap <Space>h :quickHier<enter>
+vmap <Space>h :quickHier<enter>
+
+eclipseaction quickType ro.amiq.dvt.ui.action.QuickRfType
+noremap <Space>t :quickType<enter>
+vmap <Space>t :quickType<enter>
+"------------/\ quick views /\------------
+
+"--------------\/ views \/-------------
+"Apparently, no Eclipse views are bindable through vrapper
+"eclipseaction Search ro.amiq.dvt.ui.action.SearchView
+"noremap <Space>s :Search<enter>
+
+eclipseaction CallHierarchy ro.amiq.dvt.ui.action.CallHierarchy 
+"ro.amiq.dvt.ui.views.commands.ShowCallHierarchy
+                            
+noremap <Space>ch :CallHierarchy<enter>
+"--------------/\ views /\--------------
+
+"------\/ Things that don't work \/------
+eclipseaction hyperlink org.eclipse.ui.edit.text.open.hyperlink
+nmap <Space>l :hyperlink
+"The above isn't working for some reason
+
+"------/\ Things that don't work /\------
+
+
+"------------\/ More Stuff \/------------
+"toggle wrap
+eclipseaction wrap org.eclipse.ui.edit.text.toggleWordWrap
+
+eclipseaction diffcb AnyEdit.compareWith.clipboard 
+
+eclipseaction cpPath ro.amiq.vlogdt.ui.editor.CopyFullPath
+nmap ,f :cpPath<enter>
+
+eclipseaction bread ro.amiq.dvt.actions.breadcrumb.ToggleBreadcrumb
+nmap <Space>b :bread<enter>
+vmap <Space>b :bread<enter>
+
+"------------/\ More Stuff /\------------
 
 ":ctco :ctci :ctunco
-
 eclipseaction ctco dynamic.action.05_co
 eclipseaction ctci dynamic.action.06_ci
 eclipseaction ctunco dynamic.action.06_unco
-
 
 
 
